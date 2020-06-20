@@ -1,0 +1,38 @@
+# SQLite version 3.x
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem 'sqlite3'
+#
+default: &default
+  adapter: sqlite3
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: db/development.sqlite3
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: db/test.sqlite3
+
+# =============================================
+# production:
+#   <<: *default
+#   database: db/production.sqlite3
+
+# herokuでPostgreSQLを使うためには、もう一箇所データベースの設定を変更する必要があります。
+# https://www.sejuku.net/blog/8178
+# 「.yml」の拡張子を持ったファイルはYAMLというデータを構造的に記述していく特殊なファイルです。
+# インデントが文法の意味を持っていますので、注意してください。
+# ymlファイルのインデント（字下げ）は必ず半角スペース2つで行い、全角の空白は使わないように注意してください。
+production:
+  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+# =============================================
